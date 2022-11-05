@@ -595,7 +595,18 @@ MonoBehaviour:
   waterAmtClick: 1
   sugarAmt: 0
   sugarAmtClick: 1
+  lemonaidAmt: 0
+  upgradeWaterClickCost: 5
+  upgradeSugarClickCost: 5
+  increasePriceCost: 5
+  sellAmt: 0.5
+  waitTime: 1
+  autoWater: 1
+  autoSugar: 1
   moneytxt: {fileID: 167185393}
+  watertxt: {fileID: 0}
+  sugartxt: {fileID: 0}
+  lemonaidtxt: {fileID: 0}
 --- !u!1 &517419133
 GameObject:
   m_ObjectHideFlags: 0
