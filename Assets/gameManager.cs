@@ -20,17 +20,29 @@ public class gameManager : MonoBehaviour
     public int upgradeWaterClickCost = 5;
     public int upgradeSugarClickCost = 5;
     public int increasePriceCost = 5;
+    public int upgradeAutoWaterCost = 5;
+    public int upgradeAutoSugarCost = 5;
+    public int increaseSalesCost = 5;
 
     public float sellAmt;
     public float waitTime = 1;
 
     public int autoWater = 0;
     public int autoSugar = 0;
+    public int sellNum = 1;
 
     public TextMeshProUGUI moneytxt;
     public TextMeshProUGUI watertxt;
+    public TextMeshProUGUI waterClickCosttxt;
+    public TextMeshProUGUI waterAutoCosttxt;
+    public TextMeshProUGUI sugarClickCosttxt;
+    public TextMeshProUGUI sugarAutoCosttxt;
+    public TextMeshProUGUI upPriceCost;
+    public TextMeshProUGUI upSalesCost;
     public TextMeshProUGUI sugartxt;
     public TextMeshProUGUI lemonaidtxt;
+
+    public GameObject pauseMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -46,9 +58,15 @@ public class gameManager : MonoBehaviour
     {
         
         moneytxt.text = "$ "+ money;
-        //watertxt.text = waterAmt.ToString();
-        //sugartxt.text = sugarAmt.ToString();
-        //lemonaidtxt.text = lemonaidAmt.ToString();
+        watertxt.text = waterAmt.ToString();
+        sugartxt.text = sugarAmt.ToString();
+        lemonaidtxt.text = lemonaidAmt.ToString();
+        upPriceCost.text = "$ " + increasePriceCost;
+        upSalesCost.text = "$ " + increaseSalesCost;
+        waterClickCosttxt.text = "$ " + upgradeWaterClickCost;
+        sugarClickCosttxt.text = "$ " + upgradeSugarClickCost;
+        waterAutoCosttxt.text = "$ " + upgradeAutoWaterCost;
+        sugarAutoCosttxt.text = "$ " + upgradeAutoSugarCost;
 
         if (waterAmt > 0 && sugarAmt > 0) {
 
@@ -56,6 +74,32 @@ public class gameManager : MonoBehaviour
             sugarAmt--;
             lemonaidAmt++;
         
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+
+            togglePause();
+        
+        }
+
+    }
+
+    public void togglePause() {
+
+        if (Time.timeScale == 1)
+        {
+
+            Time.timeScale = 0;
+            pauseMenu.SetActive(true);
+
+        }
+
+        else
+        {
+
+            Time.timeScale = 1;
+            pauseMenu.SetActive(false);
+
         }
 
     }
@@ -84,6 +128,18 @@ public class gameManager : MonoBehaviour
     
     }
 
+    public void upgradeWaterAuto() {
+
+        if (money >= upgradeAutoWaterCost) {
+
+            autoWater++;
+            money -= upgradeAutoWaterCost;
+            upgradeAutoWaterCost *= 2;
+        
+        }
+    
+    }
+
     public void upgradeSugarClick()
     {
 
@@ -93,6 +149,19 @@ public class gameManager : MonoBehaviour
             sugarAmtClick++;
             money -= upgradeSugarClickCost;
             upgradeSugarClickCost *= 2;
+
+        }
+
+    }
+
+    public void upgradeSugarAuto() {
+
+        if (money >= upgradeAutoSugarCost)
+        {
+
+            autoSugar++;
+            money -= upgradeAutoSugarCost;
+            upgradeAutoSugarCost *= 2;
 
         }
 
@@ -110,6 +179,18 @@ public class gameManager : MonoBehaviour
     
     }
 
+    public void inscreaseSales() {
+
+        if (money >= increaseSalesCost) {
+
+            sellNum++;
+            money -= increaseSalesCost;
+            increaseSalesCost *= 2;
+        
+        }
+    
+    }
+
     public IEnumerator sellLemonaidLoop()
     {
 
@@ -119,8 +200,23 @@ public class gameManager : MonoBehaviour
             if (lemonaidAmt > 0)
             {
 
-                money += sellAmt;
-                lemonaidAmt--;
+                for (int i = 0; i < sellNum; i++) {
+
+                    if (lemonaidAmt > 0)
+                    {
+
+                        lemonaidAmt--;
+                        money += sellAmt;
+
+                    }
+
+                    else {
+
+                        break;
+
+                    }
+                
+                }
 
             }
 
