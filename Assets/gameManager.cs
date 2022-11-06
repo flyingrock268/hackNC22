@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[RequireComponent(typeof(AudioSource))]
 public class gameManager : MonoBehaviour
 {
 
@@ -47,12 +48,18 @@ public class gameManager : MonoBehaviour
 
     public GameObject pauseMenu;
 
+    public AudioClip success;
+    public AudioClip failure;
+
+    AudioSource Aud;
+
     // Start is called before the first frame update
     void Start()
     {
 
         StartCoroutine(sellLemonaidLoop());
         StartCoroutine(genResources());
+        Aud = GetComponent<AudioSource>();
 
     }
 
@@ -122,11 +129,20 @@ public class gameManager : MonoBehaviour
 
     public void upgradeWaterClick() {
 
-        if (money >= upgradeWaterClickCost) {
+        if (money >= upgradeWaterClickCost)
+        {
 
             waterAmtClick++;
             money -= upgradeWaterClickCost;
             upgradeWaterClickCost *= 2;
+
+            Aud.PlayOneShot(success);
+
+        }
+
+        else {
+
+            Aud.PlayOneShot(failure);
         
         }
     
@@ -139,9 +155,17 @@ public class gameManager : MonoBehaviour
             autoWater++;
             money -= upgradeAutoWaterCost;
             upgradeAutoWaterCost *= 2;
-        
+            Aud.PlayOneShot(success);
+
         }
-    
+
+        else
+        {
+
+            Aud.PlayOneShot(failure);
+
+        }
+
     }
 
     public void upgradeSugarClick()
@@ -153,6 +177,15 @@ public class gameManager : MonoBehaviour
             sugarAmtClick++;
             money -= upgradeSugarClickCost;
             upgradeSugarClickCost *= 2;
+
+            Aud.PlayOneShot(success);
+
+        }
+
+        else
+        {
+
+            Aud.PlayOneShot(failure);
 
         }
 
@@ -167,6 +200,15 @@ public class gameManager : MonoBehaviour
             money -= upgradeAutoSugarCost;
             upgradeAutoSugarCost *= 2;
 
+            Aud.PlayOneShot(success);
+
+        }
+
+        else
+        {
+
+            Aud.PlayOneShot(failure);
+
         }
 
     }
@@ -178,9 +220,18 @@ public class gameManager : MonoBehaviour
             sellAmt += .5f;
             money -= increasePriceCost;
             increasePriceCost *= 2;
-        
+
+            Aud.PlayOneShot(success);
+
         }
-    
+
+        else
+        {
+
+            Aud.PlayOneShot(failure);
+
+        }
+
     }
 
     public void inscreaseSales() {
@@ -190,9 +241,18 @@ public class gameManager : MonoBehaviour
             sellNum++;
             money -= increaseSalesCost;
             increaseSalesCost *= 2;
-        
+
+            Aud.PlayOneShot(success);
+
         }
-    
+
+        else
+        {
+
+            Aud.PlayOneShot(failure);
+
+        }
+
     }
 
     public void increaseMultiplier() {
@@ -202,9 +262,18 @@ public class gameManager : MonoBehaviour
             mult += .25f;
             money -= fruitMultiplerCost;
             fruitMultiplerCost *= 2;
-        
+
+            Aud.PlayOneShot(success);
+
         }
-    
+
+        else
+        {
+
+            Aud.PlayOneShot(failure);
+
+        }
+
     }
 
     public IEnumerator sellLemonaidLoop()
