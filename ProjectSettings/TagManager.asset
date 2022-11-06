@@ -41,3 +41,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: objs
+    uniqueID: 2064565651
+    locked: 0

@@ -8,6 +8,7 @@ public class gameManager : MonoBehaviour
 {
 
     public float money = 10;
+    public float mult = 1.0f;
 
     public int waterAmt;
     public int waterAmtClick;
@@ -23,6 +24,7 @@ public class gameManager : MonoBehaviour
     public int upgradeAutoWaterCost = 5;
     public int upgradeAutoSugarCost = 5;
     public int increaseSalesCost = 5;
+    public int fruitMultiplerCost = 100;
 
     public float sellAmt;
     public float waitTime = 1;
@@ -39,6 +41,7 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI sugarAutoCosttxt;
     public TextMeshProUGUI upPriceCost;
     public TextMeshProUGUI upSalesCost;
+    public TextMeshProUGUI fruitMultiplierCosttxt;
     public TextMeshProUGUI sugartxt;
     public TextMeshProUGUI lemonaidtxt;
 
@@ -57,7 +60,7 @@ public class gameManager : MonoBehaviour
     void Update()
     {
         
-        moneytxt.text = "$ "+ money;
+        moneytxt.text = "$ "+ money.ToString("0.00");
         watertxt.text = waterAmt.ToString();
         sugartxt.text = sugarAmt.ToString();
         lemonaidtxt.text = lemonaidAmt.ToString();
@@ -67,6 +70,7 @@ public class gameManager : MonoBehaviour
         sugarClickCosttxt.text = "$ " + upgradeSugarClickCost;
         waterAutoCosttxt.text = "$ " + upgradeAutoWaterCost;
         sugarAutoCosttxt.text = "$ " + upgradeAutoSugarCost;
+        fruitMultiplierCosttxt.text = "$ " + fruitMultiplerCost;
 
         if (waterAmt > 0 && sugarAmt > 0) {
 
@@ -191,6 +195,18 @@ public class gameManager : MonoBehaviour
     
     }
 
+    public void increaseMultiplier() {
+
+        if (money >= fruitMultiplerCost) {
+
+            mult += .25f;
+            money -= fruitMultiplerCost;
+            fruitMultiplerCost *= 2;
+        
+        }
+    
+    }
+
     public IEnumerator sellLemonaidLoop()
     {
 
@@ -206,7 +222,7 @@ public class gameManager : MonoBehaviour
                     {
 
                         lemonaidAmt--;
-                        money += sellAmt;
+                        money += sellAmt * mult;
 
                     }
 
